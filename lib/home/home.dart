@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import 'home_model.dart';
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeModel>(
@@ -14,7 +11,7 @@ class MyHomePage extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(title),
+              title: Text('kinender_mobile'),
             ),
             body: Center(
               child: Column(
