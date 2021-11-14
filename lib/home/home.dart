@@ -21,14 +21,14 @@ class MyHomePage extends StatelessWidget {
                     'You have pushed the button this many times:',
                   ),
                   Text(
-                    model.counter.toString(),
+                    model.mypage.toString(),
                     style: Theme.of(context).textTheme.headline4,
                   ),
                 ],
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: model.incrementCounter,
+              onPressed: model.callMypageApi,
               tooltip: 'Increment',
               child: Icon(Icons.add),
             ),
