@@ -12,7 +12,14 @@ class Header extends StatelessWidget with PreferredSizeWidget {
       child: Consumer<HeaderModel>(
         builder: (context, model, child) {
           return AppBar(
-            title: Text('header'),
+            title: Text(
+              'header',
+              style: TextStyle(
+                color: Color(0xFF42b983),
+              ),
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0.0, // appbarの影を無くす
           );
         },
       ),
