@@ -21,24 +21,29 @@ class MyHomePage extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: CalendarCarousel<Event>(
-                        weekendTextStyle: TextStyle(color: Colors.red),
-                        thisMonthDayBorderColor: Colors.grey,
-                        weekFormat: false,
-                        height: 420.0,
-                        daysHaveCircularBorder: false,
-                        customGridViewPhysics: NeverScrollableScrollPhysics(),
-                        markedDateShowIcon: true,
-                        markedDateIconMaxShown: 2,
-                        todayTextStyle: TextStyle(
-                          color: Colors.blue,
-                        ),
-                        markedDateIconBuilder: (event) {
-                          return event.icon;
-                        },
-                        todayBorderColor: Colors.green,
-                        markedDateMoreShowTotal: false),
+                      onDayPressed: model.onDayPressed,
+                      weekendTextStyle: TextStyle(color: Colors.red),
+                      thisMonthDayBorderColor: Colors.grey,
+                      weekFormat: false,
+                      height: 420.0,
+                      daysHaveCircularBorder: false,
+                      customGridViewPhysics: NeverScrollableScrollPhysics(),
+                      markedDateShowIcon: true,
+                      markedDateIconMaxShown: 2,
+                      todayTextStyle: TextStyle(
+                        color: Colors.blue,
+                      ),
+                      markedDateIconBuilder: (event) {
+                        return event.icon;
+                      },
+                      todayBorderColor: Colors.green,
+                      markedDateMoreShowTotal: false,
+                    ),
                   ),
-                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
                 ],
               ),
             ),
