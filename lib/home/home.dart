@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:provider/provider.dart';
 import '../header/header.dart';
 import 'home_model.dart';
@@ -16,13 +18,27 @@ class MyHomePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
+                  Expanded(
+                    flex: 2,
+                    child: CalendarCarousel<Event>(
+                        weekendTextStyle: TextStyle(color: Colors.red),
+                        thisMonthDayBorderColor: Colors.grey,
+                        weekFormat: false,
+                        height: 420.0,
+                        daysHaveCircularBorder: false,
+                        customGridViewPhysics: NeverScrollableScrollPhysics(),
+                        markedDateShowIcon: true,
+                        markedDateIconMaxShown: 2,
+                        todayTextStyle: TextStyle(
+                          color: Colors.blue,
+                        ),
+                        markedDateIconBuilder: (event) {
+                          return event.icon;
+                        },
+                        todayBorderColor: Colors.green,
+                        markedDateMoreShowTotal: false),
                   ),
-                  Text(
-                    model.mypage.toString(),
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
+                  Expanded(flex: 1, child: Container()),
                 ],
               ),
             ),
