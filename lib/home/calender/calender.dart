@@ -11,6 +11,7 @@ class Calender extends StatelessWidget {
       child: Consumer<HomeModel>(
         builder: (context, model, child) {
           return TableCalendar(
+            locale: 'ja_JP',
             firstDay: DateTime.utc(2020, 1, 1),
             lastDay: DateTime.utc(2999, 12, 31),
             focusedDay: model.focusedDay,
