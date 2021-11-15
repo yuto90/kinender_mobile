@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kinender_mobile/home/calender/calender.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../header/header.dart';
@@ -21,16 +22,7 @@ class Home extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      child: TableCalendar(
-                        firstDay: DateTime.utc(2020, 1, 1),
-                        lastDay: DateTime.utc(2999, 12, 31),
-                        focusedDay: model.now,
-                        calendarFormat: model.calendarFormat,
-                        // カレンダーのフォーマット変更
-                        onFormatChanged: (format) {
-                          model.changeFormat(format);
-                        },
-                      ),
+                      child: Calender(),
                     ),
                   ),
                   Expanded(
