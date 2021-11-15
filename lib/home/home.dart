@@ -4,7 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../header/header.dart';
 import 'home_model.dart';
 
-class MyHomePage extends StatelessWidget {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeModel>(
