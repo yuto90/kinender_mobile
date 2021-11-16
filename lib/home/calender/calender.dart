@@ -35,6 +35,13 @@ class Calender extends StatelessWidget {
                 onPageChanged: (_focusedDay) {
                   model.focusedDay = _focusedDay;
                 },
+                calendarBuilders: CalendarBuilders(
+                  markerBuilder: (context, date, events) {
+                    if (events.isNotEmpty) {
+                      return buildEventsMarker(date, events);
+                    }
+                  },
+                ),
               ),
               ListView(
                 shrinkWrap: true,
@@ -51,4 +58,29 @@ class Calender extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildEventsMarker(DateTime date, List events) {
+  return Positioned(
+    right: 5,
+    bottom: 5,
+    child: AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.red[300],
+      ),
+      width: 16.0,
+      height: 16.0,
+      child: Center(
+        child: Text(
+          '${events.length}',
+          style: TextStyle().copyWith(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
+        ),
+      ),
+    ),
+  );
 }
