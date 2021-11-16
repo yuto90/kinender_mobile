@@ -10,25 +10,42 @@ class Calender extends StatelessWidget {
       create: (_) => HomeModel(),
       child: Consumer<HomeModel>(
         builder: (context, model, child) {
-          return TableCalendar(
-            locale: 'ja_JP',
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2999, 12, 31),
-            focusedDay: model.focusedDay,
-            calendarFormat: model.calendarFormat,
-            // カレンダーのフォーマット変更
-            onFormatChanged: (format) {
-              model.changeFormat(format);
-            },
-            // どの日が選択されているか判断
-            selectedDayPredicate: (day) {
-              // 比較されたDateTimeオブジェクトの時間部分を無視する
-              return isSameDay(model.selectedDay, day);
-            },
-            // タップした日付に印が付く
-            onDaySelected: (selectedDay, focusedDay) {
-              model.markTapDay(selectedDay, focusedDay);
-            },
+          return Column(
+            children: [
+              TableCalendar(
+                locale: 'ja_JP',
+                firstDay: DateTime.utc(2020, 1, 1),
+                lastDay: DateTime.utc(2999, 12, 31),
+                focusedDay: model.focusedDay,
+                eventLoader: model.getEventForDay,
+                calendarFormat: model.calendarFormat,
+                // カレンダーのフォーマット変更
+                onFormatChanged: (format) {
+                  model.changeFormat(format);
+                },
+                // どの日が選択されているか判断
+                selectedDayPredicate: (day) {
+                  // 比較されたDateTimeオブジェクトの時間部分を無視する
+                  return isSameDay(model.selectedDay, day);
+                },
+                // タップした日付に印が付く
+                onDaySelected: (selectedDay, focusedDay) {
+                  model.markTapDay(selectedDay, focusedDay);
+                },
+                onPageChanged: (_focusedDay) {
+                  model.focusedDay = _focusedDay;
+                },
+              ),
+              ListView(
+                shrinkWrap: true,
+                children: model
+                    .getEventForDay(model.selectedDay)
+                    .map((event) => ListTile(
+                          title: Text(event.toString()),
+                        ))
+                    .toList(),
+              )
+            ],
           );
         },
       ),

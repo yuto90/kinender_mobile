@@ -20,14 +20,9 @@ class Home extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    flex: 2,
                     child: Container(
                       child: Calender(),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
                   ),
                 ],
               ),
