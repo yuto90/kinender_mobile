@@ -61,33 +61,43 @@ class Calender extends StatelessWidget {
                     },
                   ),
                 ),
-                FutureBuilder(
-                  future: model.createPostDateData(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      // 非同期処理未完了 = 通信中
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
+                Container(
+                  decoration: BoxDecoration(
+                    border: const Border(
+                      top: const BorderSide(
+                        color: Colors.black,
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  child: FutureBuilder(
+                    future: model.createPostDateData(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // 非同期処理未完了 = 通信中
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
 
-                    if (snapshot.error != null) {
-                      // エラー
-                      return Center(
-                        child: Text('APIエラー'),
-                      );
-                    }
+                      if (snapshot.error != null) {
+                        // エラー
+                        return Center(
+                          child: Text('APIエラー'),
+                        );
+                      }
 
-                    return ListView(
-                      shrinkWrap: true,
-                      children: model
-                          .getEventForDay(model.selectedDay)
-                          .map((event) => ListTile(
-                                title: Text(event.toString()),
-                              ))
-                          .toList(),
-                    );
-                  },
+                      return ListView(
+                        shrinkWrap: true,
+                        children: model
+                            .getEventForDay(model.selectedDay)
+                            .map((event) => ListTile(
+                                  title: Text(event.toString()),
+                                ))
+                            .toList(),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
