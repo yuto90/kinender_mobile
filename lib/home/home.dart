@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: model.callMypageApi,
+              onPressed: model.callGetPostDateApi,
               tooltip: 'Increment',
               child: Icon(Icons.add),
             ),

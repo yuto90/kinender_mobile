@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 
 class HomeModel extends ChangeNotifier {
   String mypage = '';
+  Map<DateTime, List> postDate = {};
 
   DateTime focusedDay = DateTime.now();
   DateTime selectedDay = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.month;
 
   // MypageAPIを呼び出す
+  // method: GET
   void callMypageApi() async {
     Uri endpoint = Uri.parse('http://localhost:8000/api/mypage/');
     var response = await http.get(endpoint, headers: {'Authorization': ''});
@@ -20,6 +23,17 @@ class HomeModel extends ChangeNotifier {
     notifyListeners();
 
     // print(await http.read(Uri.parse('http://localhost:8000/api/mypage/')));
+  }
+
+  // PostDateAPIを呼び出す
+  // method: GET
+  void callGetPostDateApi() async {
+    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
+    var response = await http.get(endpoint, headers: {'Authorization': ''});
+    String decodeRes = utf8.decode(response.bodyBytes); // 返却結果をUTF8にコンバート
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${decodeRes}');
+    notifyListeners();
   }
 
   // カレンダーのフォーマットを切り替える
@@ -41,36 +55,36 @@ class HomeModel extends ChangeNotifier {
   }
 
   // イベントのテストデータ
-  Map<DateTime, List> eventsList = {
-    DateTime.now().subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-    DateTime.now(): ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-    DateTime.now().add(Duration(days: 1)): [
-      'Event A8',
-      'Event B8',
-      'Event C8',
-      'Event D8'
-    ],
-    DateTime.now().add(Duration(days: 3)):
-        Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-    DateTime.now().add(Duration(days: 7)): [
-      'Event A10',
-      'Event B10',
-      'Event C10'
-    ],
-    DateTime.now().add(Duration(days: 11)): ['Event A11', 'Event B11'],
-    DateTime.now().add(Duration(days: 17)): [
-      'Event A12',
-      'Event B12',
-      'Event C12',
-      'Event D12'
-    ],
-    DateTime.now().add(Duration(days: 22)): ['Event A13', 'Event B13'],
-    DateTime.now().add(Duration(days: 26)): [
-      'Event A14',
-      'Event B14',
-      'Event C14'
-    ],
-  };
+  //Map<DateTime, List> eventsList = {
+  //DateTime.now().subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
+  //DateTime.now(): ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
+  //DateTime.now().add(Duration(days: 1)): [
+  //'Event A8',
+  //'Event B8',
+  //'Event C8',
+  //'Event D8'
+  //],
+  //DateTime.now().add(Duration(days: 3)):
+  //Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
+  //DateTime.now().add(Duration(days: 7)): [
+  //'Event A10',
+  //'Event B10',
+  //'Event C10'
+  //],
+  //DateTime.now().add(Duration(days: 11)): ['Event A11', 'Event B11'],
+  //DateTime.now().add(Duration(days: 17)): [
+  //'Event A12',
+  //'Event B12',
+  //'Event C12',
+  //'Event D12'
+  //],
+  //DateTime.now().add(Duration(days: 22)): ['Event A13', 'Event B13'],
+  //DateTime.now().add(Duration(days: 26)): [
+  //'Event A14',
+  //'Event B14',
+  //'Event C14'
+  //],
+  //};
 
   // DateTime型から20210930の8桁のint型へ変換
   int getHashCode(DateTime key) {
@@ -82,7 +96,7 @@ class HomeModel extends ChangeNotifier {
     final _events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: getHashCode,
-    )..addAll(eventsList);
+    )..addAll(postDate);
 
     return _events[day] ?? [];
   }
