@@ -136,6 +136,7 @@ class HomeModel extends ChangeNotifier {
         } else {
           postDate[parseDate] = [event['title']];
         }
+        notifyListeners();
       });
     }
   }

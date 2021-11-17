@@ -31,7 +31,6 @@ class Calender extends StatelessWidget {
                 // タップした日付に印が付く
                 onDaySelected: (selectedDay, focusedDay) {
                   model.markTapDay(selectedDay, focusedDay);
-                  print(selectedDay);
                 },
                 onPageChanged: (_focusedDay) {
                   model.focusedDay = _focusedDay;
