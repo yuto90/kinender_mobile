@@ -117,23 +117,26 @@ class HomeModel extends ChangeNotifier {
   Future createPostDateData() async {
     DateTime parseDate;
 
-    // PostDateAPIを呼び出し
-    List res = await callGetPostDateApi();
+    // API返却値が格納されていない場合のみ呼び出し
+    if (postDate.isEmpty) {
+      // PostDateAPIを呼び出し
+      List res = await callGetPostDateApi();
 
-    // Map<DateTime, List>のデータ型に変換
-    res.forEach((event) {
-      print(event['title']);
-      print(DateTime.parse(event['date']));
+      // Map<DateTime, List>のデータ型に変換
+      res.forEach((event) {
+        print(event['title']);
+        print(DateTime.parse(event['date']));
 
-      // ['date']をDatetimeに変換
-      parseDate = DateTime.parse(event['date']);
+        // ['date']をDatetimeに変換
+        parseDate = DateTime.parse(event['date']);
 
-      //todo 同じ日時のkeyが存在したらvalueに['title']を追加する
-      if (postDate.containsKey(parseDate)) {
-        postDate[parseDate]!.add(event['title']);
-      } else {
-        postDate[parseDate] = [event['title']];
-      }
-    });
+        //同じ日時のkeyが存在したらvalueに['title']を追加する
+        if (postDate.containsKey(parseDate)) {
+          postDate[parseDate]!.add(event['title']);
+        } else {
+          postDate[parseDate] = [event['title']];
+        }
+      });
+    }
   }
 }

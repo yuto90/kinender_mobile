@@ -31,6 +31,7 @@ class Calender extends StatelessWidget {
                 // タップした日付に印が付く
                 onDaySelected: (selectedDay, focusedDay) {
                   model.markTapDay(selectedDay, focusedDay);
+                  print(selectedDay);
                 },
                 onPageChanged: (_focusedDay) {
                   model.focusedDay = _focusedDay;
@@ -43,15 +44,34 @@ class Calender extends StatelessWidget {
                   },
                 ),
               ),
-              ListView(
-                shrinkWrap: true,
-                children: model
-                    .getEventForDay(model.selectedDay)
-                    .map((event) => ListTile(
-                          title: Text(event.toString()),
-                        ))
-                    .toList(),
-              )
+              FutureBuilder(
+                future: model.createPostDateData(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // 非同期処理未完了 = 通信中
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (snapshot.error != null) {
+                    // エラー
+                    return Center(
+                      child: Text('APIエラー'),
+                    );
+                  }
+
+                  return ListView(
+                    shrinkWrap: true,
+                    children: model
+                        .getEventForDay(model.selectedDay)
+                        .map((event) => ListTile(
+                              title: Text(event.toString()),
+                            ))
+                        .toList(),
+                  );
+                },
+              ),
             ],
           );
         },
