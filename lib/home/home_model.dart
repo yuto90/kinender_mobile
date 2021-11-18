@@ -8,7 +8,6 @@ import 'package:table_calendar/table_calendar.dart';
 import 'calender/calender.dart';
 
 class HomeModel extends ChangeNotifier {
-  String mypage = '';
   Map<DateTime, List> postDate = {};
 
   DateTime focusedDay = DateTime.now();
@@ -47,27 +46,11 @@ class HomeModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // MypageAPIを呼び出す
-  // method: GET
-  void callMypageApi() async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/mypage/');
-    var response = await http.get(endpoint, headers: {'Authorization': ''});
-    //print('Response status: ${response.statusCode}');
-    //print('Response body: ${response.body}');
-    mypage = response.body;
-    notifyListeners();
-
-    // print(await http.read(Uri.parse('http://localhost:8000/api/mypage/')));
-  }
-
   // PostDateAPIを呼び出す
   // method: GET
   Future<List> callGetPostDateApi() async {
     Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
-    http.Response response = await http.get(endpoint, headers: {
-      'Authorization':
-          'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNvbGlkdXNnYWtvNDA4N0BnbWFpbC5jb20iLCJleHAiOjE2MzYyMDM2NTEsImVtYWlsIjoic29saWR1c2dha280MDg3QGdtYWlsLmNvbSJ9.Kgy7Imy7nWbng5VkAKgHBb4BNC5hze-F4sqysMYugN0'
-    });
+    http.Response response = await http.get(endpoint, headers: {});
 
     // 返却結果をUTF8にコンバート
     String decodeRes = utf8.decode(response.bodyBytes);
