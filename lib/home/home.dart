@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kinender_mobile/footer/footer.dart';
+import 'package:kinender_mobile/home/footer/footer.dart';
 import 'package:kinender_mobile/home/calender/calender.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -22,13 +22,19 @@ class Home extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Calender(),
+                      child: model.pages[model.currentIndex],
                     ),
                   ),
                 ],
               ),
             ),
-            bottomNavigationBar: Footer(),
+            bottomNavigationBar: MultiProvider(
+              providers: [
+                Provider<int>.value(value: model.currentIndex),
+                Provider<Function>.value(value: model.changeSelectedItemColor),
+              ],
+              child: Footer(),
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: model.callGetPostDateApi,
               tooltip: 'Increment',

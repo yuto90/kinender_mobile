@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:http/http.dart' as http;
+import 'package:kinender_mobile/mypage/mypage.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
+import 'calender/calender.dart';
 
 class HomeModel extends ChangeNotifier {
   String mypage = '';
@@ -11,6 +14,38 @@ class HomeModel extends ChangeNotifier {
   DateTime focusedDay = DateTime.now();
   DateTime selectedDay = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.month;
+
+  // 画面切り替え用のページ
+  List<Widget> pages = <Widget>[
+    Provider<dynamic>.value(
+      value: HomeModel,
+      child: Container(
+        child: Calender(),
+      ),
+    ),
+    Mypage(),
+  ];
+
+  // 表示中のページ。デフォルトは0
+  int currentIndex = 0;
+
+  // initState的なやつ
+  HomeModel() {
+    initValue();
+  }
+
+  void initValue() {
+    print('init');
+  }
+
+  void changeSelectedItemColor() {
+    if (currentIndex == 0) {
+      currentIndex = 1;
+    } else {
+      currentIndex = 0;
+    }
+    notifyListeners();
+  }
 
   // MypageAPIを呼び出す
   // method: GET
@@ -92,8 +127,8 @@ class HomeModel extends ChangeNotifier {
 
       // Map<DateTime, List>のデータ型に変換
       res.forEach((event) {
-        print(event['title']);
-        print(DateTime.parse(event['date']));
+        //print(event['title']);
+        //print(DateTime.parse(event['date']));
 
         // ['date']をDatetimeに変換
         parseDate = DateTime.parse(event['date']);
@@ -104,8 +139,8 @@ class HomeModel extends ChangeNotifier {
         } else {
           postDate[parseDate] = [event['title']];
         }
-        notifyListeners();
       });
+      notifyListeners();
     }
   }
 }
