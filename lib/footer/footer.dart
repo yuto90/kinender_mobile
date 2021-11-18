@@ -13,6 +13,14 @@ class Footer extends StatelessWidget {
           return BottomNavigationBar(
             backgroundColor: Colors.white,
             elevation: 0.0, // footerの影を無くす
+            currentIndex: model.currentIndex,
+            selectedItemColor: Color(0xFF42b983), // 選択中アイテムの色
+            unselectedItemColor: Colors.grey, // 非選択のアイテムの色
+            //backgroundColor: Colors.lightBlue,
+            //type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              model.changeSelectedItemColor();
+            },
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
