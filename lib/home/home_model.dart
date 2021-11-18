@@ -16,16 +16,6 @@ class HomeModel extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
 
   // 画面切り替え用のページ
-  //List<Widget> pages = <Widget>[
-  //Provider<dynamic>.value(
-  //value: HomeModel,
-  //child: Container(
-  //child: Calender(),
-  //),
-  //),
-  //Mypage(),
-  //];
-
   Map<int, Widget> pages = {
     0: Provider<dynamic>.value(
       value: HomeModel,

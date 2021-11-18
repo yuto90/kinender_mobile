@@ -12,6 +12,7 @@ class Header extends StatelessWidget with PreferredSizeWidget {
       child: Consumer<HeaderModel>(
         builder: (context, model, child) {
           return AppBar(
+            iconTheme: IconThemeData(color: Color(0xFF42b983)),
             title: Text(
               'header',
               style: TextStyle(
