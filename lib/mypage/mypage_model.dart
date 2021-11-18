@@ -10,4 +10,11 @@ class MypageModel extends ChangeNotifier {
     var userInfo = await Model.callMypageApi();
     return userInfo['name'];
   }
+
+  // PostDateAPIの返却値をそのまま返すだけ
+  Future<List> getAllEvent() async {
+    // PostDateAPIを呼び出し
+    List res = await Model.callGetPostDateApi();
+    return res;
+  }
 }

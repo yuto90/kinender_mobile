@@ -75,7 +75,6 @@ class HomeModel extends ChangeNotifier {
     final _events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: getHashCode,
-      //)..addAll(postDateMock);
     )..addAll(postDate);
 
     return _events[day] ?? [];
