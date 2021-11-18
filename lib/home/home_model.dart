@@ -5,6 +5,7 @@ import 'package:kinender_mobile/mypage/mypage.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
+import '../model.dart';
 import 'calender/calender.dart';
 
 class HomeModel extends ChangeNotifier {
@@ -44,25 +45,6 @@ class HomeModel extends ChangeNotifier {
       currentIndex = 0;
     }
     notifyListeners();
-  }
-
-  // PostDateAPIを呼び出す
-  // method: GET
-  Future<List> callGetPostDateApi() async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
-    http.Response response = await http.get(endpoint, headers: {});
-
-    // 返却結果をUTF8にコンバート
-    String decodeRes = utf8.decode(response.bodyBytes);
-
-    //print('Response status: ${response.statusCode}');
-    //print('Response body: ${decodeRes}');
-    if (response.statusCode == 200) {
-      // stringで返されているレスポンスをJsonに変換
-      return jsonDecode(decodeRes);
-    } else {
-      return ['error'];
-    }
   }
 
   // カレンダーのフォーマットを切り替える
@@ -106,7 +88,7 @@ class HomeModel extends ChangeNotifier {
     // API返却値が格納されていない場合のみ呼び出し
     if (postDate.isEmpty) {
       // PostDateAPIを呼び出し
-      List res = await callGetPostDateApi();
+      List res = await Model.callGetPostDateApi();
 
       // Map<DateTime, List>のデータ型に変換
       res.forEach((event) {

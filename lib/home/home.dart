@@ -35,11 +35,6 @@ class Home extends StatelessWidget {
               ],
               child: Footer(),
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: model.callGetPostDateApi,
-              tooltip: 'Increment',
-              child: Icon(Icons.add),
-            ),
           );
         },
       ),
