@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kinender_mobile/home/footer/footer.dart';
 import 'package:kinender_mobile/home/calender/calender.dart';
+import 'package:kinender_mobile/post/post.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../header/header.dart';
@@ -34,6 +35,22 @@ class Home extends StatelessWidget {
                 Provider<Function>.value(value: model.changeSelectedItemColor),
               ],
               child: Footer(),
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MultiProvider(
+                      providers: [
+                        Provider<DateTime>.value(value: model.selectedDay),
+                      ],
+                      child: Post(),
+                    ),
+                  ),
+                );
+              },
             ),
           );
         },
