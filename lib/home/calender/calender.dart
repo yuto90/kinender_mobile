@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kinender_mobile/detail/detail.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../home_model.dart';
@@ -93,6 +94,15 @@ class Calender extends StatelessWidget {
                             .getEventForDay(model.selectedDay)
                             .map((event) => ListTile(
                                   title: Text(event.toString()),
+                                  // タップして詳細画面へ遷移
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Detail(),
+                                      ),
+                                    );
+                                  },
                                 ))
                             .toList(),
                       );
