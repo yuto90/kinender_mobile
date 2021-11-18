@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kinender_mobile/footer/footer.dart';
 import 'package:kinender_mobile/home/calender/calender.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -27,6 +28,7 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
+            bottomNavigationBar: Footer(),
             floatingActionButton: FloatingActionButton(
               onPressed: model.callGetPostDateApi,
               tooltip: 'Increment',
