@@ -16,15 +16,25 @@ class HomeModel extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
 
   // 画面切り替え用のページ
-  List<Widget> pages = <Widget>[
-    Provider<dynamic>.value(
+  //List<Widget> pages = <Widget>[
+  //Provider<dynamic>.value(
+  //value: HomeModel,
+  //child: Container(
+  //child: Calender(),
+  //),
+  //),
+  //Mypage(),
+  //];
+
+  Map<int, Widget> pages = {
+    0: Provider<dynamic>.value(
       value: HomeModel,
       child: Container(
         child: Calender(),
       ),
     ),
-    Mypage(),
-  ];
+    1: Mypage(),
+  };
 
   // 表示中のページ。デフォルトは0
   int currentIndex = 0;
@@ -41,7 +51,7 @@ class HomeModel extends ChangeNotifier {
   void changeSelectedItemColor() {
     if (currentIndex == 0) {
       currentIndex = 1;
-    } else {
+    } else if (currentIndex == 1) {
       currentIndex = 0;
     }
     notifyListeners();
