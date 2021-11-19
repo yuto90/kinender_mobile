@@ -40,12 +40,10 @@ class HomeModel extends ChangeNotifier {
 
   // フッターがタップされた時に色を変える
   void changeSelectedItemColor(int index) {
-    if (index == 0) {
-      currentIndex = 0;
-    } else if (index == 1) {
-      currentIndex = 1;
+    if (currentIndex != index) {
+      currentIndex = index;
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   // カレンダーのフォーマットを切り替える
