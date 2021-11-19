@@ -7,7 +7,7 @@ class MypageModel extends ChangeNotifier {
   String userName = '名前';
 
   Future<String> getUserName() async {
-    var userInfo = await Model.callMypageApi();
+    Map userInfo = await Model.callMypageApi();
     return userInfo['name'];
   }
 

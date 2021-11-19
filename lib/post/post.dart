@@ -49,6 +49,13 @@ class Post extends StatelessWidget {
                       hintText: 'メモ',
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      model.postEvent();
+                      Navigator.pop(context);
+                    },
+                    child: Text('登録'),
+                  )
                 ],
               ),
             ),

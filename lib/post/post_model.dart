@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../model.dart';
 
 class PostModel extends ChangeNotifier {
   // APIに埋める日付
   DateTime? inputDate;
+  String? formatInputDate;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController memoController = TextEditingController();
@@ -32,7 +34,24 @@ class PostModel extends ChangeNotifier {
   // DateTime型をyyyy-MM-dd形式のString型にフォーマットする
   String formatDate() {
     DateFormat outputFormat = DateFormat('yyyy-MM-dd');
-    String formatInputDate = outputFormat.format(inputDate!);
-    return formatInputDate;
+    formatInputDate = outputFormat.format(inputDate!);
+    return formatInputDate!;
+  }
+
+  // 入力内容をDjangoに登録する
+  Future<void> postEvent() async {
+    String inputTitle = titleController.text;
+    String inputMemo = memoController.text;
+
+    Map authUserInfo = await Model.callMypageApi();
+    String uuid = authUserInfo['id'];
+
+    // PostDateAPI(POST)を呼び出し
+    await Model.callPostPostDateApi(
+      formatInputDate!,
+      inputTitle,
+      inputMemo,
+      uuid,
+    );
   }
 }
