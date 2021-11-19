@@ -11,7 +11,7 @@ class Post extends StatelessWidget {
       child: Consumer<PostModel>(
         builder: (context, model, child) {
           // providerからデータ受け取り
-          model.inputDate = context.watch<DateTime>();
+          model.initDate(context.watch<DateTime>());
 
           return Scaffold(
             backgroundColor: Colors.white,
