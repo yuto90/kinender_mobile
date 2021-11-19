@@ -5,6 +5,9 @@ class PostModel extends ChangeNotifier {
   // APIに埋める日付
   DateTime? inputDate;
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController memoController = TextEditingController();
+
   void initDate(DateTime defaltDate) {
     // 画面更新時にproviderからのデータを再代入させない
     if (inputDate == null) {

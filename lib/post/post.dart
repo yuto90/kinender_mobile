@@ -17,6 +17,7 @@ class Post extends StatelessWidget {
             backgroundColor: Colors.white,
             appBar: Header(),
             body: Container(
+              margin: EdgeInsets.all(30),
               child: Column(
                 children: [
                   Row(
@@ -35,6 +36,18 @@ class Post extends StatelessWidget {
                         ),
                       )
                     ],
+                  ),
+                  TextField(
+                    controller: model.titleController,
+                    decoration: InputDecoration(
+                      hintText: 'どんな日？',
+                    ),
+                  ),
+                  TextField(
+                    controller: model.memoController,
+                    decoration: InputDecoration(
+                      hintText: 'メモ',
+                    ),
                   ),
                 ],
               ),
