@@ -19,7 +19,7 @@ class Footer extends StatelessWidget {
       //backgroundColor: Colors.lightBlue,
       //type: BottomNavigationBarType.fixed,
       onTap: (index) {
-        changeColor();
+        changeColor(index);
       },
       items: const [
         BottomNavigationBarItem(

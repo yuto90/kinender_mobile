@@ -38,11 +38,12 @@ class HomeModel extends ChangeNotifier {
     print('init');
   }
 
-  void changeSelectedItemColor() {
-    if (currentIndex == 0) {
-      currentIndex = 1;
-    } else if (currentIndex == 1) {
+  // フッターがタップされた時に色を変える
+  void changeSelectedItemColor(int index) {
+    if (index == 0) {
       currentIndex = 0;
+    } else if (index == 1) {
+      currentIndex = 1;
     }
     notifyListeners();
   }
