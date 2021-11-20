@@ -91,7 +91,17 @@ class Calender extends StatelessWidget {
                   shrinkWrap: true,
                   children: model
                       .getEventForDay(model.selectedDay)
-                      .map((event) => ListTile(
+                      .map(
+                        (event) => Container(
+                          decoration: BoxDecoration(
+                            border: const Border(
+                              bottom: const BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: ListTile(
                             title: Text(event.toString()),
                             // タップして詳細画面へ遷移
                             onTap: () {
@@ -102,7 +112,9 @@ class Calender extends StatelessWidget {
                                 ),
                               );
                             },
-                          ))
+                          ),
+                        ),
+                      )
                       .toList(),
                 );
               },
