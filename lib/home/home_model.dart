@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import '../model.dart';
-import 'calender/calender.dart';
+import 'calendar/calendar.dart';
 
 class HomeModel extends ChangeNotifier {
   Map<DateTime, List> postDate = {};
@@ -20,7 +20,7 @@ class HomeModel extends ChangeNotifier {
     0: Provider<dynamic>.value(
       value: HomeModel,
       child: Container(
-        child: Calender(),
+        child: Calendar(),
       ),
     ),
     1: Mypage(),

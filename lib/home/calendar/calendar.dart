@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../home_model.dart';
 
-class Calender extends StatelessWidget {
+class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeModel model = context.watch<HomeModel>();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kinender_mobile/home/footer/footer.dart';
-import 'package:kinender_mobile/home/calender/calender.dart';
+import 'package:kinender_mobile/home/calendar/calendar.dart';
 import 'package:kinender_mobile/post/post.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
