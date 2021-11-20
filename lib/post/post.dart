@@ -51,8 +51,9 @@ class Post extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      model.postEvent();
-                      Navigator.pop(context);
+                      // Calender画面に登録したイベントの情報を返却
+                      Future<List> registeredEvent = model.postEvent();
+                      Navigator.pop(context, registeredEvent);
                     },
                     child: Text('登録'),
                   )

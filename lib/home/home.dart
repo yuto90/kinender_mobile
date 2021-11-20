@@ -38,8 +38,9 @@ class Home extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               child: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                // 戻るボタンを押されたらnull, 登録を押したらListを返却
+                var registeredEvent = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MultiProvider(
@@ -50,6 +51,7 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 );
+                model.addNewEvent(registeredEvent);
               },
             ),
           );
