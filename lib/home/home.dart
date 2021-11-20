@@ -36,24 +36,27 @@ class Home extends StatelessWidget {
               ],
               child: Footer(),
             ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () async {
-                // 戻るボタンを押されたらnull, 登録を押したらListを返却
-                var registeredEvent = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MultiProvider(
-                      providers: [
-                        Provider<DateTime>.value(value: model.selectedDay),
-                      ],
-                      child: Post(),
-                    ),
-                  ),
-                );
-                model.addNewEvent(registeredEvent);
-              },
-            ),
+            floatingActionButton: model.currentIndex == 0
+                ? FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () async {
+                      // 戻るボタンを押されたらnull, 登録を押したらListを返却
+                      var registeredEvent = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MultiProvider(
+                            providers: [
+                              Provider<DateTime>.value(
+                                  value: model.selectedDay),
+                            ],
+                            child: Post(),
+                          ),
+                        ),
+                      );
+                      model.addNewEvent(registeredEvent);
+                    },
+                  )
+                : null,
           );
         },
       ),
