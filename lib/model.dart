@@ -4,6 +4,37 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Model {
+  // LoginAPIを呼び出す
+  // method: POST
+  static Future<String> callLoginApi(
+    String email,
+    String password,
+  ) async {
+    Uri endpoint = Uri.parse('http://localhost:8000/login/');
+    Map<String, String> body = {
+      'email': email,
+      'password': password,
+    };
+
+    try {
+      http.Response response = await http.post(
+        endpoint,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        // 返却結果をUTF8にコンバート
+        String decodeRes = utf8.decode(response.bodyBytes);
+        return decodeRes;
+      }
+    } catch (e) {
+      // http通信エラー
+      return e.toString();
+    }
+  }
+
   // PostDateAPIを呼び出す
   // method: GET
   static Future<List> callGetPostDateApi() async {
