@@ -103,9 +103,11 @@ class SignUpPage extends StatelessWidget {
 
                                 if (res.contains('"name"')) {
                                   // 正常に登録されたらサインイン処理
-                                  String token = await model.trySignIn();
+                                  String res = await model.trySignIn();
                                   // 正常にjwtトークンを発行できたらHome画面に遷移
-                                  if (token.contains('"token"')) {
+                                  if (res.contains('"token"')) {
+                                    // jwtトークンをローカルストレージに保存
+                                    await model.saveJwtToken(res);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -130,6 +132,23 @@ class SignUpPage extends StatelessWidget {
                                       },
                                     );
                                   }
+                                } else if (res.contains('email')) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('このメールアドレスは既に使用されています。'),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            child: Text('OK'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
                                 } else {
                                   showDialog(
                                     context: context,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kinender_mobile/home/home.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import '../model.dart';
 
 class AuthPageModel extends ChangeNotifier {
@@ -66,5 +67,16 @@ class AuthPageModel extends ChangeNotifier {
     } else {
       return 'ok';
     }
+  }
+
+  // 返却されたjwtトークンをローカルストレージに保存
+  Future<void> saveJwtToken(String stringJsonToken) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var jsonToken = jsonDecode(stringJsonToken);
+    String token = jsonToken['token'];
+    token = 'JWT ' + token;
+
+    prefs.setString('token', token);
   }
 }

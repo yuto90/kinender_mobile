@@ -84,6 +84,8 @@ class SignInPage extends StatelessWidget {
                                 String res = await model.trySignIn();
 
                                 if (res.contains('"token"')) {
+                                  // jwtトークンをローカルストレージに保存
+                                  await model.saveJwtToken(res);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
