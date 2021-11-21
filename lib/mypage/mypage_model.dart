@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model.dart';
 
 class MypageModel extends ChangeNotifier {
@@ -16,5 +17,12 @@ class MypageModel extends ChangeNotifier {
     // PostDateAPIを呼び出し
     List res = await Model.callGetPostDateApi();
     return res;
+  }
+
+  // ログアウト処理
+  void logout() async {
+    // ローカルストレージに保存されているjwtトークンを削除
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
   }
 }

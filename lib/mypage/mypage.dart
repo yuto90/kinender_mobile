@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kinender_mobile/detail/detail.dart';
 import 'package:kinender_mobile/header/header.dart';
+import 'package:kinender_mobile/user_check.dart';
 import 'package:provider/provider.dart';
 import 'mypage_model.dart';
 
@@ -34,7 +35,23 @@ class Mypage extends StatelessWidget {
                       }
 
                       return Container(
-                        child: Text(snapshot.data.toString()),
+                        child: Column(
+                          children: [
+                            Text(snapshot.data.toString()),
+                            ElevatedButton(
+                              // ログアウトさせてUserCheck画面に戻す
+                              onPressed: () {
+                                model.logout();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserCheck()),
+                                );
+                              },
+                              child: Text('ログアウト'),
+                            )
+                          ],
+                        ),
                       );
                     },
                   ),
