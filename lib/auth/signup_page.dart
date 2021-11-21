@@ -98,23 +98,24 @@ class SignUpPage extends StatelessWidget {
                             height: size.width * 0.15,
                             child: ElevatedButton(
                               onPressed: () async {
-                                try {
-                                  await model.signUp();
-                                  print('登録しました');
+                                // 登録処理
+                                String res = await model.trySignUp();
+
+                                if (res.contains('"name"')) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Home(),
                                     ),
                                   );
-                                } catch (e) {
+                                } else {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text(e.toString()),
+                                        title: Text(res),
                                         actions: <Widget>[
-                                          FlatButton(
+                                          ElevatedButton(
                                             child: Text('OK'),
                                             onPressed: () {
                                               Navigator.of(context).pop();

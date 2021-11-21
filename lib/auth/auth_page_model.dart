@@ -18,13 +18,29 @@ class AuthPageModel extends ChangeNotifier {
   }
 
   // ログイン処理
-  Future<String> trySignIn(context) async {
+  Future<String> trySignIn() async {
     email = emailController.text;
     password = passwordController.text;
 
     String validateRes = formValidate('signin');
     if (validateRes == 'ok') {
       String res = await Model.callLoginApi(email!, password!);
+      print(res);
+      return res;
+    } else {
+      return validateRes;
+    }
+  }
+
+  // 登録処理
+  Future<String> trySignUp() async {
+    name = nameController.text;
+    email = emailController.text;
+    password = passwordController.text;
+
+    String validateRes = formValidate('signup');
+    if (validateRes == 'ok') {
+      String res = await Model.callRegisterApi(name!, email!, password!);
       print(res);
       return res;
     } else {
@@ -51,7 +67,4 @@ class AuthPageModel extends ChangeNotifier {
       return 'ok';
     }
   }
-
-  //! 登録処理
-  Future signUp() async {}
 }

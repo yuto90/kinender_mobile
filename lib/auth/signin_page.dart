@@ -81,16 +81,16 @@ class SignInPage extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 // ログイン処理
-                                String res = await model.trySignIn(context);
+                                String res = await model.trySignIn();
 
-                                if (res.contains('token')) {
+                                if (res.contains('"token"')) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Home(),
                                     ),
                                   );
-                                } else if (res.contains('detail')) {
+                                } else if (res.contains('"detail"')) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
