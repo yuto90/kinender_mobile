@@ -14,8 +14,15 @@ class AuthPageModel extends ChangeNotifier {
   TextEditingController passwordController = TextEditingController();
 
   // 認証済みかを返却する
-  bool isAuth() {
-    return true;
+  Future<bool> isSaveToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String res = prefs.getString('token') ?? '';
+
+    if (res != '') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // ログイン処理

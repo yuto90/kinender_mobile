@@ -11,13 +11,27 @@ class UserCheck extends StatelessWidget {
       create: (_) => AuthPageModel(),
       child: Consumer<AuthPageModel>(
         builder: (context, model, child) {
-          // ログイン状態を判別
-          if (model.isAuth()) {
-            return AuthPage();
-          } else {
-            //print(currentUser);
-            return Home();
-          }
+          // jwtトークンが保存されているかを確認して認証中であればHome画面へ、されていなければ認証画面へ飛ばす
+          return FutureBuilder(
+            future: model.isSaveToken(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // 非同期処理未完了 = 通信中
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (snapshot.error != null) {
+                // エラー
+                return Center(
+                  child: Text('エラー'),
+                );
+              }
+
+              return snapshot.data ? Home() : AuthPage();
+            },
+          );
         },
       ),
     );
