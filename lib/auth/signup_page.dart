@@ -102,12 +102,34 @@ class SignUpPage extends StatelessWidget {
                                 String res = await model.trySignUp();
 
                                 if (res.contains('"name"')) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ),
-                                  );
+                                  // 正常に登録されたらサインイン処理
+                                  String token = await model.trySignIn();
+                                  // 正常にjwtトークンを発行できたらHome画面に遷移
+                                  if (token.contains('"token"')) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Home(),
+                                      ),
+                                    );
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(res),
+                                          actions: <Widget>[
+                                            ElevatedButton(
+                                              child: Text('OK'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
                                 } else {
                                   showDialog(
                                     context: context,
