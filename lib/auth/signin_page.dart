@@ -78,7 +78,7 @@ class SignInPage extends StatelessWidget {
                           ButtonTheme(
                             minWidth: size.width * 0.8,
                             height: size.width * 0.15,
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () async {
                                 // ログイン処理
                                 String res = await model.trySignIn(context);
@@ -127,10 +127,19 @@ class SignInPage extends StatelessWidget {
                                   );
                                 }
                               },
-                              child: Text('Login'),
-                              shape: StadiumBorder(),
-                              color: Color(0xFF42b983),
-                              textColor: Colors.white,
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF42b983),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 25.0,
+                                  horizontal: 150,
+                                ),
+                              ),
+                              child: Text(
+                                'Login',
+                              ),
                             ),
                           ),
                         ],

@@ -37,7 +37,7 @@ class AuthPage extends StatelessWidget {
               ButtonTheme(
                 minWidth: size.width * 0.8,
                 height: size.width * 0.15,
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -45,9 +45,17 @@ class AuthPage extends StatelessWidget {
                     );
                   },
                   child: Text('Login'),
-                  shape: StadiumBorder(),
-                  color: Color(0xFF42b983),
-                  textColor: Colors.white,
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF42b983),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    //elevation: 16,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 25.0,
+                      horizontal: 150,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -57,17 +65,26 @@ class AuthPage extends StatelessWidget {
               ButtonTheme(
                 minWidth: size.width * 0.8,
                 height: size.width * 0.15,
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SignUpPage()),
                     );
                   },
-                  child: Text('Sign up'),
-                  shape: StadiumBorder(),
-                  color: Colors.green[100],
-                  textColor: Colors.black,
+                  child: Text(
+                    'SignUp',
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 25.0,
+                      horizontal: 150,
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -22,7 +22,7 @@ class SignUpPage extends StatelessWidget {
           backgroundColor: Colors.white,
           brightness: Brightness.light, // ステータスバー白黒反転
           title: Text(
-            'Sign Up',
+            'SignUp',
             style: TextStyle(
               color: Color(0xFF42b983),
               fontSize: 20,
@@ -96,7 +96,7 @@ class SignUpPage extends StatelessWidget {
                           ButtonTheme(
                             minWidth: size.width * 0.8,
                             height: size.width * 0.15,
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () async {
                                 try {
                                   await model.signUp();
@@ -126,10 +126,17 @@ class SignUpPage extends StatelessWidget {
                                   );
                                 }
                               },
-                              child: Text('Sign Up'),
-                              shape: StadiumBorder(),
-                              color: Color(0xFF42b983),
-                              textColor: Colors.white,
+                              child: Text('SignUp'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF42b983),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 25.0,
+                                  horizontal: 150,
+                                ),
+                              ),
                             ),
                           ),
                         ],
