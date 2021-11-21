@@ -15,7 +15,7 @@ class Post extends StatelessWidget {
 
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(),
+            appBar: Header(isReturnButton: true),
             body: Container(
               margin: EdgeInsets.all(30),
               child: Column(

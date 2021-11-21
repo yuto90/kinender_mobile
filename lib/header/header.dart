@@ -6,6 +6,10 @@ class Header extends StatelessWidget with PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
+  // コンストラクタでデータ受け取り
+  bool isReturnButton;
+  Header({key, required this.isReturnButton}) : super(key: key);
+
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HeaderModel>(
       create: (_) => HeaderModel(),
@@ -21,6 +25,7 @@ class Header extends StatelessWidget with PreferredSizeWidget {
             ),
             backgroundColor: Colors.white,
             elevation: 0.0, // appbarの影を無くす
+            automaticallyImplyLeading: isReturnButton,
           );
         },
       ),

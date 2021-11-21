@@ -12,7 +12,7 @@ class Detail extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(),
+            appBar: Header(isReturnButton: true),
             body: Center(
               child: ElevatedButton(
                 child: Text('前のページに戻るよ'),

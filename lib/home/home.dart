@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(),
+            appBar: Header(isReturnButton: false),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
