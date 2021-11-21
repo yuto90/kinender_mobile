@@ -1,7 +1,7 @@
-import 'dart:collection';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:collection';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Model {
   // LoginAPIを呼び出す
@@ -72,11 +72,14 @@ class Model {
   // method: GET
   static Future<List> callGetPostDateApi() async {
     Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
+
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwtToken = prefs.getString('token') ?? '';
+
     try {
-      http.Response response = await http.get(endpoint, headers: {
-        'Authorization':
-            'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNvbGlkdXNnYWtvNDA4N0BnbWFpbC5jb20iLCJleHAiOjE2MzYyMDM2NTEsImVtYWlsIjoic29saWR1c2dha280MDg3QGdtYWlsLmNvbSJ9.Kgy7Imy7nWbng5VkAKgHBb4BNC5hze-F4sqysMYugN0'
-      });
+      http.Response response =
+          await http.get(endpoint, headers: {'Authorization': jwtToken});
       // 返却結果をUTF8にコンバート
       String decodeRes = utf8.decode(response.bodyBytes);
 
@@ -102,10 +105,12 @@ class Model {
     String uuid,
   ) async {
     Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
-    Map<String, String> headers = {
-      'Authorization':
-          'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNvbGlkdXNnYWtvNDA4N0BnbWFpbC5jb20iLCJleHAiOjE2MzYyMDM2NTEsImVtYWlsIjoic29saWR1c2dha280MDg3QGdtYWlsLmNvbSJ9.Kgy7Imy7nWbng5VkAKgHBb4BNC5hze-F4sqysMYugN0'
-    };
+
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwtToken = prefs.getString('token') ?? '';
+
+    Map<String, String> headers = {'Authorization': jwtToken};
     Map<String, String> body = {
       'date': inputDate,
       'title': inputTitle,
@@ -136,11 +141,14 @@ class Model {
   // method: GET
   static Future callMypageApi() async {
     Uri endpoint = Uri.parse('http://localhost:8000/api/mypage/');
+
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwtToken = prefs.getString('token') ?? '';
+
     try {
-      var response = await http.get(endpoint, headers: {
-        'Authorization':
-            'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNvbGlkdXNnYWtvNDA4N0BnbWFpbC5jb20iLCJleHAiOjE2MzYyMDM2NTEsImVtYWlsIjoic29saWR1c2dha280MDg3QGdtYWlsLmNvbSJ9.Kgy7Imy7nWbng5VkAKgHBb4BNC5hze-F4sqysMYugN0'
-      });
+      var response =
+          await http.get(endpoint, headers: {'Authorization': jwtToken});
       // 返却結果をUTF8にコンバート
       String decodeRes = utf8.decode(response.bodyBytes);
 
