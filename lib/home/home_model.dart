@@ -90,17 +90,27 @@ class HomeModel extends ChangeNotifier {
 
       // Map<DateTime, List>のデータ型に変換
       res.forEach((event) {
-        //print(event['title']);
-        //print(DateTime.parse(event['date']));
-
         // ['date']をDatetimeに変換
         parseDate = DateTime.parse(event['date']);
 
         //同じ日時のkeyが存在したらvalueに['title']を追加する
         if (postDate.containsKey(parseDate)) {
-          postDate[parseDate]!.add(event['title']);
+          //postDate[parseDate]!.add([event['id'], event['title']]);
+          postDate[parseDate]!.add({
+            'id': event['id'],
+            'date': event['date'],
+            'title': event['title'],
+            'memo': event['memo'],
+          });
         } else {
-          postDate[parseDate] = [event['title']];
+          postDate[parseDate] = [
+            {
+              'id': event['id'],
+              'date': event['date'],
+              'title': event['title'],
+              'memo': event['memo'],
+            }
+          ];
         }
       });
       // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ

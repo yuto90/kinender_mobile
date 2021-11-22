@@ -6,6 +6,8 @@ import 'detail_model.dart';
 class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // providerからデータ受け取り
+    Map post = context.watch<Map>();
     return ChangeNotifierProvider<DetailModel>(
       create: (_) => DetailModel(),
       child: Consumer<DetailModel>(
@@ -13,13 +15,12 @@ class Detail extends StatelessWidget {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: Header(isReturnButton: true),
-            body: Center(
-              child: ElevatedButton(
-                child: Text('前のページに戻るよ'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+            body: Column(
+              children: [
+                Center(
+                  child: Text(post.toString()),
+                ),
+              ],
             ),
           );
         },

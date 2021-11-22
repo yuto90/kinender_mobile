@@ -102,13 +102,16 @@ class Calendar extends StatelessWidget {
                             ),
                           ),
                           child: ListTile(
-                            title: Text(event.toString()),
+                            title: Text(event["title"].toString()),
                             // タップして詳細画面へ遷移
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Detail(),
+                                  builder: (context) => Provider<Map>.value(
+                                    value: event,
+                                    child: Detail(),
+                                  ),
                                 ),
                               );
                             },

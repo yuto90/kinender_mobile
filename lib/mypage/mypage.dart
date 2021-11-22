@@ -111,7 +111,11 @@ class Mypage extends StatelessWidget {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => Detail(),
+                                              builder: (context) =>
+                                                  Provider<Map>.value(
+                                                value: event,
+                                                child: Detail(),
+                                              ),
                                             ),
                                           );
                                         },
