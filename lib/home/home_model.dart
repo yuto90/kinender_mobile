@@ -103,7 +103,8 @@ class HomeModel extends ChangeNotifier {
           postDate[parseDate] = [event['title']];
         }
       });
-      //print(postDate);
+      // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ
+      postDate[DateTime(2999, 12, 31)] = ['init'];
       notifyListeners();
     }
   }
