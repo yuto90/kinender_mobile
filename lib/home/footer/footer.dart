@@ -23,6 +23,10 @@ class Footer extends StatelessWidget {
       },
       items: const [
         BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: '設定',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'ホーム',
         ),

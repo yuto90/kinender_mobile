@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:http/http.dart' as http;
 import 'package:kinender_mobile/mypage/mypage.dart';
+import 'package:kinender_mobile/settings/settings.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -18,17 +19,18 @@ class HomeModel extends ChangeNotifier {
 
   // 画面切り替え用のページ
   Map<int, Widget> pages = {
-    0: Provider<dynamic>.value(
+    0: Settings(),
+    1: Provider<dynamic>.value(
       value: HomeModel,
       child: Container(
         child: Calendar(),
       ),
     ),
-    1: Mypage(),
+    2: Mypage(),
   };
 
   // 表示中のページ。デフォルトは0
-  int currentIndex = 0;
+  int currentIndex = 1;
 
   // initState的なやつ
   HomeModel() {

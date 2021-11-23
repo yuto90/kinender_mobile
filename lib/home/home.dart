@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
               ],
               child: Footer(),
             ),
-            floatingActionButton: model.currentIndex == 0
+            floatingActionButton: model.currentIndex == 1
                 ? FloatingActionButton(
                     child: Icon(Icons.add),
                     onPressed: () async {
