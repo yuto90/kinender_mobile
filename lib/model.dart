@@ -177,6 +177,35 @@ class Model {
     }
   }
 
+  // PostDateAPIを呼び出す
+  // method: DELETE
+  static Future<String> callDeletePostDateApi(String eventId) async {
+    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/$eventId/');
+
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwtToken = prefs.getString('token') ?? '';
+
+    Map<String, String> headers = {'Authorization': jwtToken};
+
+    try {
+      http.Response response = await http.delete(
+        endpoint,
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        return response.statusCode.toString();
+      } else {
+        // 返却結果をUTF8にコンバート
+        String decodeRes = utf8.decode(response.bodyBytes);
+        return decodeRes;
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   // MypageAPIを呼び出す
   // method: GET
   static Future callMypageApi() async {
