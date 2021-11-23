@@ -137,6 +137,46 @@ class Model {
     }
   }
 
+  // PostDateAPIを呼び出す
+  // method: PATCH
+  static Future<String> callUpdatePostDateApi(
+    String eventId,
+    String inputDate,
+    String inputTitle,
+    String inputMemo,
+  ) async {
+    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/$eventId/');
+
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwtToken = prefs.getString('token') ?? '';
+
+    Map<String, String> headers = {'Authorization': jwtToken};
+    Map<String, String> body = {
+      'date': inputDate,
+      'title': inputTitle,
+      'memo': inputMemo,
+    };
+
+    try {
+      http.Response response = await http.patch(
+        endpoint,
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        return response.statusCode.toString();
+      } else {
+        // 返却結果をUTF8にコンバート
+        String decodeRes = utf8.decode(response.bodyBytes);
+        return decodeRes;
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   // MypageAPIを呼び出す
   // method: GET
   static Future callMypageApi() async {
