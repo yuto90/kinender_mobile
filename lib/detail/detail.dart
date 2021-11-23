@@ -55,6 +55,13 @@ class Detail extends StatelessWidget {
                       Navigator.pop(context, res);
                     },
                     child: Text('登録'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Future<String> res = model.deleteEvent();
+                      Navigator.pop(context, res);
+                    },
+                    child: Text('削除'),
                   )
                 ],
               ),

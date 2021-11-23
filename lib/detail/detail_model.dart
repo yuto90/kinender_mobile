@@ -58,4 +58,11 @@ class DetailModel extends ChangeNotifier {
     );
     return res;
   }
+
+  // 投稿を削除する
+  Future<String> deleteEvent() async {
+    // PostDateAPI(PATCH)を呼び出し
+    String res = await Model.callDeletePostDateApi(eventId!);
+    return res;
+  }
 }
