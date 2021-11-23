@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:http/http.dart' as http;
 import 'package:kinender_mobile/mypage/mypage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import '../model.dart';
@@ -79,42 +80,11 @@ class HomeModel extends ChangeNotifier {
     return _events[day] ?? [];
   }
 
-  // PostDateAPIの返却値を元にイベント情報をMapで生成
-  Future createPostDateData() async {
-    DateTime parseDate;
-
+  // 画面読み込み時にカレンダー表示用データセットの初期データを生成する
+  Future initCalendarData() async {
     // API返却値が格納されていない場合のみ呼び出し
     if (postDate.isEmpty) {
-      // PostDateAPIを呼び出し
-      List res = await Model.callGetPostDateApi();
-
-      // Map<DateTime, List>のデータ型に変換
-      res.forEach((event) {
-        // ['date']をDatetimeに変換
-        parseDate = DateTime.parse(event['date']);
-
-        //同じ日時のkeyが存在したらvalueに['title']を追加する
-        if (postDate.containsKey(parseDate)) {
-          //postDate[parseDate]!.add([event['id'], event['title']]);
-          postDate[parseDate]!.add({
-            'id': event['id'],
-            'date': event['date'],
-            'title': event['title'],
-            'memo': event['memo'],
-          });
-        } else {
-          postDate[parseDate] = [
-            {
-              'id': event['id'],
-              'date': event['date'],
-              'title': event['title'],
-              'memo': event['memo'],
-            }
-          ];
-        }
-      });
-      // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ
-      postDate[DateTime(2999, 12, 31)] = ['init'];
+      await createCalendarData();
       notifyListeners();
     }
   }
@@ -137,5 +107,50 @@ class HomeModel extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  // 更新したイベントをカレンダーに反映させる
+  void updateEvent(events) async {
+    if (events != null) {
+      // 更新前のデータセットを初期化
+      postDate = {};
+      await createCalendarData();
+      notifyListeners();
+    }
+  }
+
+  // PostDateAPIからの返却値を元にカレンダー表示用のデータセットを生成する
+  Future createCalendarData() async {
+    DateTime parseDate;
+    // PostDateAPIを呼び出し
+    List res = await Model.callGetPostDateApi();
+
+    // Map<DateTime, List>のデータ型に変換
+    res.forEach((event) {
+      // ['date']をDatetimeに変換
+      parseDate = DateTime.parse(event['date']);
+
+      //同じ日時のkeyが存在したらvalueに['title']を追加する
+      if (postDate.containsKey(parseDate)) {
+        //postDate[parseDate]!.add([event['id'], event['title']]);
+        postDate[parseDate]!.add({
+          'id': event['id'],
+          'date': event['date'],
+          'title': event['title'],
+          'memo': event['memo'],
+        });
+      } else {
+        postDate[parseDate] = [
+          {
+            'id': event['id'],
+            'date': event['date'],
+            'title': event['title'],
+            'memo': event['memo'],
+          }
+        ];
+      }
+    });
+    // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ
+    postDate[DateTime(2999, 12, 31)] = ['init'];
   }
 }

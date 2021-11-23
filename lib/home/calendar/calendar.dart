@@ -71,7 +71,7 @@ class Calendar extends StatelessWidget {
               ),
             ),
             child: FutureBuilder(
-              future: model.createPostDateData(),
+              future: model.initCalendarData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   // 非同期処理未完了 = 通信中
@@ -104,8 +104,8 @@ class Calendar extends StatelessWidget {
                           child: ListTile(
                             title: Text(event["title"].toString()),
                             // タップして詳細画面へ遷移
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () async {
+                              var updatedEvent = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Provider<Map>.value(
@@ -114,6 +114,8 @@ class Calendar extends StatelessWidget {
                                   ),
                                 ),
                               );
+
+                              model.updateEvent(updatedEvent);
                             },
                           ),
                         ),
