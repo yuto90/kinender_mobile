@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
                           ),
                         ),
                       );
-                      model.addNewEvent(registeredEvent);
+                      model.updateEvent(registeredEvent);
                     },
                   )
                 : null,

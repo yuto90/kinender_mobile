@@ -89,26 +89,6 @@ class HomeModel extends ChangeNotifier {
     }
   }
 
-  // 登録した新しいイベントをカレンダーに反映させる
-  void addNewEvent(event) {
-    if (event != null) {
-      DateTime newEventDate = event[0];
-      String newEventTitle = event[1];
-      // 同じ日付にイベントが存在したらその日付の配列にイベントを追加
-      if (postDate.containsKey(newEventDate)) {
-        postDate[newEventDate]!.add(newEventTitle);
-      } else {
-        Map<DateTime, List> newEvent = {
-          newEventDate: [newEventTitle]
-        };
-
-        postDate.addAll(newEvent);
-      }
-
-      notifyListeners();
-    }
-  }
-
   // 更新したイベントをカレンダーに反映させる
   void updateEvent(events) async {
     if (events != null) {

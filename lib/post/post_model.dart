@@ -39,7 +39,7 @@ class PostModel extends ChangeNotifier {
   }
 
   // 入力内容をDjangoに登録する
-  Future<List> postEvent() async {
+  Future<String> postEvent() async {
     String inputTitle = titleController.text;
     String inputMemo = memoController.text;
 
@@ -47,14 +47,13 @@ class PostModel extends ChangeNotifier {
     String uuid = authUserInfo['id'];
 
     // PostDateAPI(POST)を呼び出し
-    await Model.callPostPostDateApi(
+    var res = await Model.callPostPostDateApi(
       formatInputDate!,
       inputTitle,
       inputMemo,
       uuid,
     );
 
-    // 登録したeventの日付とタイトルを返却
-    return [inputDate!, inputTitle];
+    return res;
   }
 }
