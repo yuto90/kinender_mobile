@@ -91,6 +91,7 @@ class Calendar extends StatelessWidget {
                       .getEventForDay(model.selectedDay)
                       .map(
                         (event) => Container(
+                          margin: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             border: const Border(
                               bottom: const BorderSide(
@@ -99,22 +100,27 @@ class Calendar extends StatelessWidget {
                               ),
                             ),
                           ),
-                          child: ListTile(
-                            title: Text(event["title"].toString()),
-                            // タップして詳細画面へ遷移
-                            onTap: () async {
-                              var updatedEvent = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Provider<Map>.value(
-                                    value: event,
-                                    child: Detail(),
+                          child: Material(
+                            elevation: 5,
+                            child: ListTile(
+                              leading: FlutterLogo(size: 56.0),
+                              title: Text(event["title"].toString()),
+                              subtitle: Text(event["date"].toString()),
+                              // タップして詳細画面へ遷移
+                              onTap: () async {
+                                var updatedEvent = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Provider<Map>.value(
+                                      value: event,
+                                      child: Detail(),
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
 
-                              model.updateEvent(updatedEvent);
-                            },
+                                model.updateEvent(updatedEvent);
+                              },
+                            ),
                           ),
                         ),
                       )
