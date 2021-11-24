@@ -83,12 +83,14 @@ class HomeModel extends ChangeNotifier {
   }
 
   // 画面読み込み時にカレンダー表示用データセットの初期データを生成する
-  Future initCalendarData() async {
+  Future<List> initCalendarData() async {
     // API返却値が格納されていない場合のみ呼び出し
     if (postDate.isEmpty) {
       await createCalendarData();
       notifyListeners();
     }
+
+    return [selectedDay.day, selectedDay.weekday];
   }
 
   // 更新したイベントをカレンダーに反映させる

@@ -60,14 +60,6 @@ class Calendar extends StatelessWidget {
             ),
           ),
           Container(
-            decoration: BoxDecoration(
-              border: const Border(
-                top: const BorderSide(
-                  color: Colors.black,
-                  width: 1,
-                ),
-              ),
-            ),
             child: FutureBuilder(
               future: model.initCalendarData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -85,46 +77,82 @@ class Calendar extends StatelessWidget {
                   );
                 }
 
-                return ListView(
-                  shrinkWrap: true,
-                  children: model
-                      .getEventForDay(model.selectedDay)
-                      .map(
-                        (event) => Container(
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: const Border(
-                              bottom: const BorderSide(
-                                color: Colors.grey,
-                                width: 1,
+                return Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: const Border(
+                          top: const BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                          bottom: const BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      child: ListTile(
+                        leading: Container(
+                          width: 50,
+                          //color: Colors.red,
+                          child: Center(
+                            child: Text(
+                              snapshot.data[0].toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Color(0xFF42b983),
                               ),
                             ),
                           ),
-                          child: Material(
-                            elevation: 5,
-                            child: ListTile(
-                              leading: FlutterLogo(size: 56.0),
-                              title: Text(event["title"].toString()),
-                              subtitle: Text(event["date"].toString()),
-                              // タップして詳細画面へ遷移
-                              onTap: () async {
-                                var updatedEvent = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Provider<Map>.value(
-                                      value: event,
-                                      child: Detail(),
-                                    ),
-                                  ),
-                                );
-
-                                model.updateEvent(updatedEvent);
-                              },
-                            ),
-                          ),
                         ),
-                      )
-                      .toList(),
+                        title: Text('この日の記念日まであと〇〇日です！'),
+                      ),
+                    ),
+                    ListView(
+                      shrinkWrap: true,
+                      children: model
+                          .getEventForDay(model.selectedDay)
+                          .map(
+                            (event) => Container(
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: const Border(
+                                  bottom: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              child: Material(
+                                elevation: 5,
+                                child: ListTile(
+                                  leading: FlutterLogo(size: 56.0),
+                                  title: Text(event["title"].toString()),
+                                  subtitle: Text(event["date"].toString()),
+                                  // タップして詳細画面へ遷移
+                                  onTap: () async {
+                                    var updatedEvent = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Provider<Map>.value(
+                                          value: event,
+                                          child: Detail(),
+                                        ),
+                                      ),
+                                    );
+
+                                    model.updateEvent(updatedEvent);
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
                 );
               },
             ),
