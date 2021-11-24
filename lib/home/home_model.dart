@@ -29,7 +29,7 @@ class HomeModel extends ChangeNotifier {
     2: Mypage(),
   };
 
-  // 表示中のページ。デフォルトは0
+  // 表示中のページ。デフォルトは1
   int currentIndex = 1;
 
   // initState的なやつ
