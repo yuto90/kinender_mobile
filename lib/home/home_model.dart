@@ -137,4 +137,20 @@ class HomeModel extends ChangeNotifier {
     // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ
     postDate[DateTime(2999, 12, 31)] = ['init'];
   }
+
+  // カウントダウンの計算
+  String calcCountDown() {
+    final Duration difference = DateTime.now().difference(selectedDay);
+    final sec = difference.inSeconds;
+    final now = DateTime.now();
+
+    if (sec >= 60 * 60 * 24) {
+      return '${difference.inDays.toString()}日前です！';
+    } else if (selectedDay.day == now.day) {
+      return '今日が記念日です！';
+    } else {
+      int futureDiff = (difference.inDays - 1) * -1;
+      return '${futureDiff.toString()}日後です！';
+    }
+  }
 }

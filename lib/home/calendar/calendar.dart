@@ -107,7 +107,7 @@ class Calendar extends StatelessWidget {
                             ),
                           ),
                         ),
-                        title: Text('この日の記念日まであと〇〇日です！'),
+                        title: Text(model.calcCountDown()),
                       ),
                     ),
                     ListView(
