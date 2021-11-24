@@ -15,7 +15,10 @@ class Post extends StatelessWidget {
 
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(isReturnButton: true),
+            appBar: Header(
+              isReturnButton: true,
+              title: '新規追加',
+            ),
             body: Container(
               margin: EdgeInsets.all(30),
               child: Column(

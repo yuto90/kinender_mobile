@@ -15,7 +15,10 @@ class Detail extends StatelessWidget {
 
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(isReturnButton: true),
+            appBar: Header(
+              isReturnButton: true,
+              title: '詳細',
+            ),
             body: Container(
               margin: EdgeInsets.all(30),
               child: Column(

@@ -16,7 +16,8 @@ class Home extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(isReturnButton: false),
+            //appBar: Header(isReturnButton: false, title: 'カレンダー'),
+            appBar: model.headers[model.currentIndex],
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

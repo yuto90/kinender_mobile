@@ -12,7 +12,10 @@ class UserConfig extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: Header(isReturnButton: true),
+            appBar: Header(
+              isReturnButton: true,
+              title: 'ユーザー情報編集',
+            ),
             body: Container(
               margin: EdgeInsets.all(30),
               child: Column(

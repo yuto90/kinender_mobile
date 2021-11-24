@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:http/http.dart' as http;
+import 'package:kinender_mobile/header/header.dart';
 import 'package:kinender_mobile/mypage/mypage.dart';
 import 'package:kinender_mobile/settings/settings.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,13 @@ class HomeModel extends ChangeNotifier {
       ),
     ),
     2: Mypage(),
+  };
+
+  // 画面毎のヘッダー
+  Map<int, PreferredSizeWidget?> headers = {
+    0: Header(isReturnButton: false, title: '設定'),
+    1: Header(isReturnButton: false, title: 'カレンダー'),
+    2: Header(isReturnButton: false, title: 'マイページ'),
   };
 
   // 表示中のページ。デフォルトは1

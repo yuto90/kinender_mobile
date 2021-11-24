@@ -8,7 +8,9 @@ class Header extends StatelessWidget with PreferredSizeWidget {
 
   // コンストラクタでデータ受け取り
   bool isReturnButton;
-  Header({key, required this.isReturnButton}) : super(key: key);
+  String title;
+  Header({key, required this.isReturnButton, required this.title})
+      : super(key: key);
 
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HeaderModel>(
@@ -18,7 +20,7 @@ class Header extends StatelessWidget with PreferredSizeWidget {
           return AppBar(
             iconTheme: IconThemeData(color: Color(0xFF42b983)),
             title: Text(
-              'header',
+              title,
               style: TextStyle(
                 color: Color(0xFF42b983),
               ),
