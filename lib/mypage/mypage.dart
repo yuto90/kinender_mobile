@@ -114,8 +114,9 @@ class Mypage extends StatelessWidget {
                                           subtitle:
                                               Text(event["date"].toString()),
                                           // タップして詳細画面へ遷移
-                                          onTap: () {
-                                            Navigator.push(
+                                          onTap: () async {
+                                            var updatedEvent =
+                                                await Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
@@ -125,6 +126,8 @@ class Mypage extends StatelessWidget {
                                                 ),
                                               ),
                                             );
+
+                                            model.notify();
                                           },
                                         ),
                                       ),

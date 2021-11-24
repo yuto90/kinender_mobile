@@ -25,4 +25,9 @@ class MypageModel extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
   }
+
+  // 画面を更新
+  void notify() {
+    notifyListeners();
+  }
 }
