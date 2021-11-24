@@ -15,25 +15,23 @@ class Calendar extends StatelessWidget {
         children: [
           TableCalendar(
             locale: 'ja_JP',
-            firstDay: DateTime.utc(2020, 1, 1),
+            firstDay: DateTime.utc(1975, 1, 1),
             lastDay: DateTime.utc(2999, 12, 31),
-
             // カレンダーヘッダー
-            //headerStyle: HeaderStyle(
-            //formatButtonVisible: false,
-            //titleCentered: true,
-            //rightChevronIcon: Icon(
-            //Icons.chevron_right,
-            //size: 16,
-            //color: Colors.grey,
-            //),
-            //leftChevronIcon: Icon(
-            //Icons.chevron_left,
-            //size: 16,
-            //color: Colors.grey,
-            //),
-            //),
-
+            headerStyle: HeaderStyle(
+              formatButtonVisible: true,
+              titleCentered: true,
+              rightChevronIcon: Icon(
+                Icons.chevron_right,
+                size: 20,
+                color: Color(0xFF42b983),
+              ),
+              leftChevronIcon: Icon(
+                Icons.chevron_left,
+                size: 20,
+                color: Color(0xFF42b983),
+              ),
+            ),
             focusedDay: model.focusedDay,
             eventLoader: model.getEventForDay,
             calendarFormat: model.calendarFormat,
