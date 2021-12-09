@@ -23,7 +23,8 @@ class MypageModel extends ChangeNotifier {
   void logout() async {
     // ローカルストレージに保存されているjwtトークンを削除
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
+    prefs.remove('accessToken');
+    prefs.remove('refreshToken');
   }
 
   // 画面を更新

@@ -16,7 +16,7 @@ class AuthPageModel extends ChangeNotifier {
   // 認証済みかを返却する
   Future<bool> isSaveToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String res = prefs.getString('token') ?? '';
+    String res = prefs.getString('accessToken') ?? '';
 
     if (res != '') {
       return true;
@@ -76,14 +76,17 @@ class AuthPageModel extends ChangeNotifier {
     }
   }
 
-  // 返却されたjwtトークンをローカルストレージに保存
+  // 返却されたaccessトークンとrefreshトークンをローカルストレージに保存
   Future<void> saveJwtToken(String stringJsonToken) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var jsonToken = jsonDecode(stringJsonToken);
-    String token = jsonToken['token'];
-    token = 'JWT ' + token;
+    dynamic jsonToken = jsonDecode(stringJsonToken);
+    String accessToken = jsonToken['access'];
+    String refreshToken = jsonToken['refresh'];
+    accessToken = 'JWT ' + accessToken;
+    refreshToken = 'JWT ' + refreshToken;
 
-    prefs.setString('token', token);
+    prefs.setString('accessToken', accessToken);
+    prefs.setString('refreshToken', refreshToken);
   }
 }

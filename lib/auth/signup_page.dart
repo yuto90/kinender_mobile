@@ -105,7 +105,7 @@ class SignUpPage extends StatelessWidget {
                                   // 正常に登録されたらサインイン処理
                                   String res = await model.trySignIn();
                                   // 正常にjwtトークンを発行できたらHome画面に遷移
-                                  if (res.contains('"token"')) {
+                                  if (res.contains('"access"')) {
                                     // jwtトークンをローカルストレージに保存
                                     await model.saveJwtToken(res);
                                     Navigator.push(

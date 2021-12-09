@@ -83,7 +83,7 @@ class SignInPage extends StatelessWidget {
                                 // ログイン処理
                                 String res = await model.trySignIn();
 
-                                if (res.contains('"token"')) {
+                                if (res.contains('"access"')) {
                                   // jwtトークンをローカルストレージに保存
                                   await model.saveJwtToken(res);
                                   Navigator.push(

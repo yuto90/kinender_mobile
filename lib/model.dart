@@ -10,7 +10,7 @@ class Model {
     String email,
     String password,
   ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/login/');
+    Uri endpoint = Uri.parse('http://localhost:8000/token/');
     Map<String, String> body = {
       'email': email,
       'password': password,
@@ -75,7 +75,7 @@ class Model {
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('accessToken') ?? '';
 
     try {
       http.Response response =
@@ -108,7 +108,7 @@ class Model {
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('accessToken') ?? '';
 
     Map<String, String> headers = {'Authorization': jwtToken};
     Map<String, String> body = {
@@ -149,7 +149,7 @@ class Model {
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('accessToken') ?? '';
 
     Map<String, String> headers = {'Authorization': jwtToken};
     Map<String, String> body = {
@@ -184,7 +184,7 @@ class Model {
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('accessToken') ?? '';
 
     Map<String, String> headers = {'Authorization': jwtToken};
 
@@ -213,7 +213,7 @@ class Model {
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('accessToken') ?? '';
 
     try {
       var response =
