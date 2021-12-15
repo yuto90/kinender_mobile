@@ -70,30 +70,23 @@ class Model {
 
   // PostDateAPIを呼び出す
   // method: GET
-  static Future<List> callGetPostDateApi() async {
+  static Future<http.Response> callGetPostDateApi() async {
     Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwtToken = prefs.getString('accessToken') ?? '';
 
-    try {
-      http.Response response =
-          await http.get(endpoint, headers: {'Authorization': jwtToken});
-      // 返却結果をUTF8にコンバート
-      String decodeRes = utf8.decode(response.bodyBytes);
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      'Authorization': jwtToken,
+    };
 
-      //print('Response status: ${response.statusCode}');
-      //print('Response body: ${decodeRes}');
-      if (response.statusCode == 200) {
-        // stringで返されているレスポンスをJsonに変換
-        return jsonDecode(decodeRes);
-      } else {
-        return ['error'];
-      }
-    } catch (e) {
-      return [e];
-    }
+    http.Response response = await http.get(
+      endpoint,
+      headers: headers,
+    );
+    return response;
   }
 
   // PostDateAPIを呼び出す
@@ -229,5 +222,33 @@ class Model {
     } catch (e) {
       return e;
     }
+  }
+
+  // TokenRefreshAPIを呼び出す
+  // method: POST
+  static Future<http.Response> callTokenRefreshApi() async {
+    http.Response response;
+    Uri endpoint = Uri.parse('http://localhost:8000/token/refresh/');
+
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String refreshToken = prefs.getString('refreshToken') ?? '';
+    refreshToken = refreshToken.substring(4);
+
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
+
+    Map<String, String> body = {
+      "refresh": refreshToken,
+    };
+
+    response = await http.post(
+      endpoint,
+      //headers: headers,
+      body: body,
+    );
+
+    return response;
   }
 }

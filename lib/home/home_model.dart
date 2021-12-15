@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import '../model.dart';
 import 'calendar/calendar.dart';
+import 'package:kinender_mobile/helper.dart';
 
 class HomeModel extends ChangeNotifier {
   Map<DateTime, List> postDate = {};
@@ -114,11 +115,25 @@ class HomeModel extends ChangeNotifier {
   // PostDateAPIからの返却値を元にカレンダー表示用のデータセットを生成する
   Future createCalendarData() async {
     DateTime parseDate;
+    http.Response eventData;
+    http.Response newToken;
     // PostDateAPIを呼び出し
-    List res = await Model.callGetPostDateApi();
+    eventData = await Model.callGetPostDateApi();
+
+    // トークンの期限切れだったらリフレッシュ
+    if (eventData.statusCode != 200) {
+      newToken = await Model.callTokenRefreshApi();
+      await Helper.setNewToken(newToken);
+      eventData = await Model.callGetPostDateApi();
+    }
+
+    // 返却結果をUTF8にコンバート
+    String decodeRes = utf8.decode(eventData.bodyBytes);
+
+    List listRes = jsonDecode(decodeRes);
 
     // Map<DateTime, List>のデータ型に変換
-    res.forEach((event) {
+    listRes.forEach((event) {
       // ['date']をDatetimeに変換
       parseDate = DateTime.parse(event['date']);
 
