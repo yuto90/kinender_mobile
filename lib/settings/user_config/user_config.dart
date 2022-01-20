@@ -97,32 +97,6 @@ class UserConfig extends StatelessWidget {
                             },
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: ElevatedButton(
-                            child: Text(
-                              'ログアウト',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0,
-                            ),
-                            // ログアウトさせてUserCheck画面に戻す
-                            onPressed: () {
-                              model.logout();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UserCheck(),
-                                ),
-                              );
-                            },
-                          ),
-                        )
                       ],
                     ),
                   );
