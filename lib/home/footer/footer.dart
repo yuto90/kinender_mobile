@@ -31,8 +31,8 @@ class Footer extends StatelessWidget {
           label: 'ホーム',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.people),
-          label: 'マイページ',
+          icon: Icon(Icons.format_list_bulleted),
+          label: '投稿一覧',
         ),
       ],
     );

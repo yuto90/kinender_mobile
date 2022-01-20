@@ -8,11 +8,6 @@ import '../model.dart';
 class MypageModel extends ChangeNotifier {
   String userName = '名前';
 
-  Future<Map> getUserInfo() async {
-    Map userInfo = await Model.callMypageApi();
-    return userInfo;
-  }
-
   // PostDateAPIの返却値をそのまま返すだけ
   Future<List> getAllEvent() async {
     // PostDateAPIを呼び出し
@@ -31,14 +26,6 @@ class MypageModel extends ChangeNotifier {
     List listRes = jsonDecode(decodeRes);
 
     return listRes;
-  }
-
-  // ログアウト処理
-  void logout() async {
-    // ローカルストレージに保存されているjwtトークンを削除
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('accessToken');
-    prefs.remove('refreshToken');
   }
 
   // 画面を更新

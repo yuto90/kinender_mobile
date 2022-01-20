@@ -23,7 +23,7 @@ class Settings extends StatelessWidget {
                   ),
                 ),
                 child: ListTile(
-                  title: Text('ユーザー設定'),
+                  title: Text('ユーザー情報'),
                   onTap: () {
                     Navigator.push(
                       context,
