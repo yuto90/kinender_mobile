@@ -17,7 +17,7 @@ class Mypage extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: FutureBuilder(
-                  future: model.getUserName(),
+                  future: model.getUserInfo(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // 非同期処理未完了 = 通信中
@@ -38,7 +38,7 @@ class Mypage extends StatelessWidget {
                         children: [
                           ListTile(
                             subtitle: Text(
-                              snapshot.data.toString(),
+                              snapshot.data['name'].toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -67,7 +67,7 @@ class Mypage extends StatelessWidget {
                           ),
                           ListTile(
                             subtitle: Text(
-                              'example.com',
+                              snapshot.data['email'].toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),

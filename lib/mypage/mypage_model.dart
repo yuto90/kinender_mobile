@@ -8,9 +8,9 @@ import '../model.dart';
 class MypageModel extends ChangeNotifier {
   String userName = '名前';
 
-  Future<String> getUserName() async {
+  Future<Map> getUserInfo() async {
     Map userInfo = await Model.callMypageApi();
-    return userInfo['name'];
+    return userInfo;
   }
 
   // PostDateAPIの返却値をそのまま返すだけ
