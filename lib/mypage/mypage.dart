@@ -16,29 +16,98 @@ class Mypage extends StatelessWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: Container(
-                  child: FutureBuilder(
-                    future: model.getUserName(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // 非同期処理未完了 = 通信中
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+                child: FutureBuilder(
+                  future: model.getUserName(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // 非同期処理未完了 = 通信中
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
 
-                      if (snapshot.error != null) {
-                        // エラー
-                        return Center(
-                          child: Text('APIエラー'),
-                        );
-                      }
+                    if (snapshot.error != null) {
+                      // エラー
+                      return Center(
+                        child: Text('APIエラー'),
+                      );
+                    }
 
-                      return Container(
-                        child: Column(
-                          children: [
-                            Text(snapshot.data.toString()),
-                            ElevatedButton(
+                    return Container(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            subtitle: Text(
+                              snapshot.data.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            title: Text(
+                              'ユーザー名',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: ElevatedButton(
+                              child: Text(
+                                '変更',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                              ),
+                              onPressed: () {
+                                print('変更');
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            subtitle: Text(
+                              'example.com',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            title: Text(
+                              'メールアドレス',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: ElevatedButton(
+                              child: Text(
+                                '変更',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                              ),
+                              onPressed: () {
+                                print('変更');
+                              },
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: ElevatedButton(
+                              child: Text(
+                                'ログアウト',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                              ),
                               // ログアウトさせてUserCheck画面に戻す
                               onPressed: () {
                                 model.logout();
@@ -48,13 +117,12 @@ class Mypage extends StatelessWidget {
                                       builder: (context) => UserCheck()),
                                 );
                               },
-                              child: Text('ログアウト'),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
               Expanded(
