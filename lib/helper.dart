@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'model.dart';
 
 class Helper {
   // TokenRefreshAPIから戻された新しいトークンをローカルストレージに保存する
@@ -18,5 +19,28 @@ class Helper {
 
     prefs.setString('accessToken', newAccessToken);
     prefs.setString('refreshToken', newRefreshToken);
+  }
+
+  // トークンの有効期限をチェックする
+  static Future<bool> checkToken() async {
+    // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('accessToken') ?? '';
+
+    // トークンの有効期限を確認
+    http.Response res = await Model.callDjoserVerifyApi(accessToken);
+    // トークンが期限切れだったらリフレッシュ
+    if (res.statusCode != 200) {
+      http.Response newToken = await Model.callTokenRefreshApi();
+      if (newToken.statusCode != 200) {
+        // todo リフレッシュトークンも期限切れだったらの処理
+        return false;
+      } else {
+        // リフレッシュしたトークンをローカルにセットする
+        await Helper.setNewToken(newToken);
+      }
+    }
+
+    return true;
   }
 }

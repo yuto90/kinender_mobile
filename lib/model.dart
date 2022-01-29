@@ -35,39 +35,6 @@ class Model {
     }
   }
 
-  // RegisterAPIを呼び出す
-  // method: POST
-  static Future<String> callRegisterApi(
-    String name,
-    String email,
-    String password,
-  ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/register/');
-    Map<String, String> body = {
-      'name': name,
-      'email': email,
-      'password': password,
-    };
-
-    try {
-      http.Response response = await http.post(
-        endpoint,
-        body: body,
-      );
-
-      if (response.statusCode == 200) {
-        return response.body;
-      } else {
-        // 返却結果をUTF8にコンバート
-        String decodeRes = utf8.decode(response.bodyBytes);
-        return decodeRes;
-      }
-    } catch (e) {
-      // http通信エラー
-      return e.toString();
-    }
-  }
-
   // PostDateAPIを呼び出す
   // method: GET
   static Future<http.Response> callGetPostDateApi() async {
@@ -224,20 +191,49 @@ class Model {
     }
   }
 
+  // RegisterAPIを呼び出す
+  // method: POST
+  static Future<String> callRegisterApi(
+    String name,
+    String email,
+    String password,
+  ) async {
+    Uri endpoint = Uri.parse('http://localhost:8000/api/register/');
+    Map<String, String> body = {
+      'name': name,
+      'email': email,
+      'password': password,
+    };
+
+    try {
+      http.Response response = await http.post(
+        endpoint,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        // 返却結果をUTF8にコンバート
+        String decodeRes = utf8.decode(response.bodyBytes);
+        return decodeRes;
+      }
+    } catch (e) {
+      // http通信エラー
+      return e.toString();
+    }
+  }
+
   // TokenRefreshAPIを呼び出す
   // method: POST
   static Future<http.Response> callTokenRefreshApi() async {
     http.Response response;
-    Uri endpoint = Uri.parse('http://localhost:8000/token/refresh/');
+    Uri endpoint = Uri.parse('http://localhost:8000/api/auth/jwt/refresh/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String refreshToken = prefs.getString('refreshToken') ?? '';
     refreshToken = refreshToken.substring(4);
-
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-    };
 
     Map<String, String> body = {
       "refresh": refreshToken,
@@ -245,7 +241,28 @@ class Model {
 
     response = await http.post(
       endpoint,
-      //headers: headers,
+      body: body,
+    );
+
+    return response;
+  }
+
+  // TokenRefreshAPIを呼び出す
+  // method: POST
+  // トークン有効期限内かを判断。trueなら「200」, falseなら「401」を返す
+  static Future<http.Response> callDjoserVerifyApi(String accessToken) async {
+    http.Response response;
+    Uri endpoint = Uri.parse('http://localhost:8000/api/auth/jwt/verify/');
+
+    // todo accessTokenを「JWT」ごと保存するのをやめる
+    accessToken = accessToken.substring(4);
+
+    Map<String, String> body = {
+      "token": accessToken,
+    };
+
+    response = await http.post(
+      endpoint,
       body: body,
     );
 
