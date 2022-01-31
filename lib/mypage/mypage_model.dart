@@ -13,19 +13,21 @@ class MypageModel extends ChangeNotifier {
     // PostDateAPIを呼び出し
     http.Response eventData;
     http.Response newToken;
-    eventData = await Model.callGetPostDateApi();
 
-    if (eventData.statusCode != 200) {
-      newToken = await Model.callTokenRefreshApi();
-      await Helper.setNewToken(newToken);
+    // API呼び出し前にトークンをチェック
+    String res = await Helper.checkToken();
+
+    if (res != 'refreshToken Expired') {
       eventData = await Model.callGetPostDateApi();
+
+      // 返却結果をUTF8にコンバート
+      String decodeRes = utf8.decode(eventData.bodyBytes);
+      List listRes = jsonDecode(decodeRes);
+
+      return listRes;
+    } else {
+      return [];
     }
-
-    // 返却結果をUTF8にコンバート
-    String decodeRes = utf8.decode(eventData.bodyBytes);
-    List listRes = jsonDecode(decodeRes);
-
-    return listRes;
   }
 
   // 画面を更新

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import '../helper.dart';
 import '../model.dart';
 
 class DetailModel extends ChangeNotifier {
@@ -49,20 +49,36 @@ class DetailModel extends ChangeNotifier {
     String inputTitle = titleController.text;
     String inputMemo = memoController.text;
 
-    // PostDateAPI(PATCH)を呼び出し
-    String res = await Model.callUpdatePostDateApi(
-      eventId!,
-      formatInputDate!,
-      inputTitle,
-      inputMemo,
-    );
-    return res;
+    // API呼び出し前にトークンをチェック
+    String resWord = await Helper.checkToken();
+
+    if (resWord != 'refreshToken Expired') {
+      // PostDateAPI(PATCH)を呼び出し
+      String res = await Model.callUpdatePostDateApi(
+        eventId!,
+        formatInputDate!,
+        inputTitle,
+        inputMemo,
+      );
+      print(res);
+      return res;
+    } else {
+      // todo リフレッシュトークンも切れていた時
+      return '';
+    }
   }
 
   // 投稿を削除する
   Future<String> deleteEvent() async {
-    // PostDateAPI(PATCH)を呼び出し
-    String res = await Model.callDeletePostDateApi(eventId!);
-    return res;
+    // API呼び出し前にトークンをチェック
+    String resWord = await Helper.checkToken();
+
+    if (resWord != 'refreshToken Expired') {
+      // PostDateAPI(PATCH)を呼び出し
+      String res = await Model.callDeletePostDateApi(eventId!);
+      return res;
+    } else {
+      return '';
+    }
   }
 }

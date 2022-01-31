@@ -117,48 +117,47 @@ class HomeModel extends ChangeNotifier {
     DateTime parseDate;
     http.Response eventData;
     http.Response newToken;
-    // PostDateAPIを呼び出し
-    eventData = await Model.callGetPostDateApi();
 
-    // トークンの期限切れだったらリフレッシュ
-    if (eventData.statusCode != 200) {
-      newToken = await Model.callTokenRefreshApi();
-      await Helper.setNewToken(newToken);
+    // API呼び出し前にトークンをチェック
+    String res = await Helper.checkToken();
+
+    if (res != 'refreshToken Expired') {
+      // PostDateAPIを呼び出し
       eventData = await Model.callGetPostDateApi();
-    }
 
-    // 返却結果をUTF8にコンバート
-    String decodeRes = utf8.decode(eventData.bodyBytes);
+      // 返却結果をUTF8にコンバート
+      String decodeRes = utf8.decode(eventData.bodyBytes);
 
-    List listRes = jsonDecode(decodeRes);
+      List listRes = jsonDecode(decodeRes);
 
-    // Map<DateTime, List>のデータ型に変換
-    listRes.forEach((event) {
-      // ['date']をDatetimeに変換
-      parseDate = DateTime.parse(event['date']);
+      // Map<DateTime, List>のデータ型に変換
+      listRes.forEach((event) {
+        // ['date']をDatetimeに変換
+        parseDate = DateTime.parse(event['date']);
 
-      //同じ日時のkeyが存在したらvalueに['title']を追加する
-      if (postDate.containsKey(parseDate)) {
-        //postDate[parseDate]!.add([event['id'], event['title']]);
-        postDate[parseDate]!.add({
-          'id': event['id'],
-          'date': event['date'],
-          'title': event['title'],
-          'memo': event['memo'],
-        });
-      } else {
-        postDate[parseDate] = [
-          {
+        //同じ日時のkeyが存在したらvalueに['title']を追加する
+        if (postDate.containsKey(parseDate)) {
+          //postDate[parseDate]!.add([event['id'], event['title']]);
+          postDate[parseDate]!.add({
             'id': event['id'],
             'date': event['date'],
             'title': event['title'],
             'memo': event['memo'],
-          }
-        ];
-      }
-    });
-    // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ
-    postDate[DateTime(2999, 12, 31)] = ['init'];
+          });
+        } else {
+          postDate[parseDate] = [
+            {
+              'id': event['id'],
+              'date': event['date'],
+              'title': event['title'],
+              'memo': event['memo'],
+            }
+          ];
+        }
+      });
+      // todo 何かしらデータが格納されていないと無限ループしてしまうので苦し紛れ
+      postDate[DateTime(2999, 12, 31)] = ['init'];
+    }
   }
 
   // カウントダウンの計算

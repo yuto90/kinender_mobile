@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../helper.dart';
 import '../model.dart';
 
 class PostModel extends ChangeNotifier {
@@ -43,17 +44,24 @@ class PostModel extends ChangeNotifier {
     String inputTitle = titleController.text;
     String inputMemo = memoController.text;
 
-    Map authUserInfo = await Model.callMypageApi();
-    String uuid = authUserInfo['id'];
+    // API呼び出し前にトークンをチェック
+    String res = await Helper.checkToken();
 
-    // PostDateAPI(POST)を呼び出し
-    var res = await Model.callPostPostDateApi(
-      formatInputDate!,
-      inputTitle,
-      inputMemo,
-      uuid,
-    );
+    if (res != 'refreshToken Expired') {
+      Map authUserInfo = await Model.callMypageApi();
+      String uuid = authUserInfo['id'];
 
-    return res;
+      // PostDateAPI(POST)を呼び出し
+      var res = await Model.callPostPostDateApi(
+        formatInputDate!,
+        inputTitle,
+        inputMemo,
+        uuid,
+      );
+
+      return res;
+    } else {
+      return '';
+    }
   }
 }
