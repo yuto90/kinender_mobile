@@ -22,7 +22,7 @@ class Helper {
   }
 
   // トークンの有効期限をチェックする
-  static Future<bool> checkToken() async {
+  static Future<String> checkToken() async {
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('accessToken') ?? '';
@@ -34,13 +34,14 @@ class Helper {
       http.Response newToken = await Model.callTokenRefreshApi();
       if (newToken.statusCode != 200) {
         // todo リフレッシュトークンも期限切れだったらの処理
-        return false;
+        return 'refreshToken Expired';
       } else {
         // リフレッシュしたトークンをローカルにセットする
         await Helper.setNewToken(newToken);
+        return 'token refresh ok';
       }
+    } else {
+      return 'accessToken ok';
     }
-
-    return true;
   }
 }

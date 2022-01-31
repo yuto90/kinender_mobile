@@ -10,10 +10,14 @@ class SettingsModel extends ChangeNotifier {
 
   Future getUserInfo() async {
     // API呼び出し前にトークンをチェック
-    bool res = await Helper.checkToken();
+    String res = await Helper.checkToken();
 
-    Map userInfo = await Model.callMypageApi();
-    return userInfo;
+    if (res != 'refreshToken Expired') {
+      Map userInfo = await Model.callMypageApi();
+      return userInfo;
+    } else {
+      return {};
+    }
   }
 
   // ログアウト処理
