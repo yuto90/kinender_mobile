@@ -10,7 +10,7 @@ class Model {
     String email,
     String password,
   ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/token/');
+    Uri endpoint = Uri.parse('http://localhost:8000/api/auth/jwt/create/');
     Map<String, String> body = {
       'email': email,
       'password': password,
