@@ -4,13 +4,15 @@ import 'dart:collection';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Model {
+  static String baseUrl = 'http://127.0.0.1/';
+
   // LoginAPIを呼び出す
   // method: POST
   static Future<String> callLoginApi(
     String email,
     String password,
   ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/auth/jwt/create/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/auth/jwt/create/');
     Map<String, String> body = {
       'email': email,
       'password': password,
@@ -38,7 +40,7 @@ class Model {
   // PostDateAPIを呼び出す
   // method: GET
   static Future<http.Response> callGetPostDateApi() async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/post_date/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,7 +66,7 @@ class Model {
     String inputMemo,
     String uuid,
   ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/post_date/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -105,7 +107,7 @@ class Model {
     String inputTitle,
     String inputMemo,
   ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/$eventId/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/post_date/$eventId/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -140,7 +142,7 @@ class Model {
   // PostDateAPIを呼び出す
   // method: DELETE
   static Future<String> callDeletePostDateApi(String eventId) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/post_date/$eventId/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/post_date/$eventId/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -169,7 +171,7 @@ class Model {
   // MypageAPIを呼び出す
   // method: GET
   static Future callMypageApi() async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/mypage/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/mypage/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -198,7 +200,7 @@ class Model {
     String email,
     String password,
   ) async {
-    Uri endpoint = Uri.parse('http://localhost:8000/api/register/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/register/');
     Map<String, String> body = {
       'name': name,
       'email': email,
@@ -228,7 +230,7 @@ class Model {
   // method: POST
   static Future<http.Response> callTokenRefreshApi() async {
     http.Response response;
-    Uri endpoint = Uri.parse('http://localhost:8000/api/auth/jwt/refresh/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/auth/jwt/refresh/');
 
     // ローカルストレージにアクセスしてログイン中ユーザーのjwtトークンを取得
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -252,7 +254,7 @@ class Model {
   // トークン有効期限内かを判断。trueなら「200」, falseなら「401」を返す
   static Future<http.Response> callDjoserVerifyApi(String accessToken) async {
     http.Response response;
-    Uri endpoint = Uri.parse('http://localhost:8000/api/auth/jwt/verify/');
+    Uri endpoint = Uri.parse(baseUrl + 'api/auth/jwt/verify/');
 
     // todo accessTokenを「JWT」ごと保存するのをやめる
     accessToken = accessToken.substring(4);
